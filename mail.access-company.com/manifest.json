@@ -1,15 +1,14 @@
 {
-  "name": "mail.access-company.com",
-  "version": "1.0",
-  "description": "Utilities for migrants to google mail system from Exchange world",
-  "options_page": "options.html",
+ 	"name": "mail.access-company.com",
+ 	"version": "1.0",
+ 	"description": "Utilities for migrants to google mail system from Exchange world",
+ 	"options_page": "options.html",
 	"background_page": "background.html",
-  "content_scripts": [
-    {
-      "matches": ["https://mail.google.com/a/access-company.com/*"],
-      "js": ["mail.js"],
-      "all_frames": false,
-      "run_at": "document_end"
-    }
-  ]
+	"icons": {"48": "netfrontlife_48x48.png"},
+	 "content_scripts": [{
+		"matches": ["https://mail.google.com/a/access-company.com/*"],
+		"js": ["mail_script.js"],
+		"all_frames": false,
+		"run_at": "document_end"
+	}]
 }

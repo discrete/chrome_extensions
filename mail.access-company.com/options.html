@@ -21,32 +21,32 @@ function saveOptions() {
 		return;
 	}
 
-  localStorage["mailLabelWidth"] = document.getElementById('label_width').value;
+	localStorage["mailLabelWidth"] = document.getElementById('label_width').value;
   
-  // Update status to let user know options were saved.
-  var status = document.getElementById("status");
+	// Update status to let user know options were saved.
+	var status = document.getElementById("status");
 	status.innerHTML = "Options Saved.";
 	
-  setTimeout(function() {
+	setTimeout( function() {
 		status.innerHTML = "";
-  }, 750);
+ 	}, 750);
 }
 
 function main() {
-  if (window.localStorage == null) {
-    alert("LocalStorage must be enabled for changing options.");
-    document.getElementById('label_width').disabled = true;
-    return;
-  }
+	if (window.localStorage == null) {
+		alert("LocalStorage must be enabled for changing options.");
+		document.getElementById('label_width').disabled = true;
+		return;
+	}
 
-  // Default handler is checked. If we've chosen another provider, we must
-  // change the checkmark.
-  if ( localStorage["mailLabelWidth"] ) {
-  	document.getElementById('label_width').value = localStorage["mailLabelWidth"];
-  }
-  else {
-  	document.getElementById('label_width').value = 172;
-  }
+	// Default handler is checked. If we've chosen another provider, we must
+	// change the checkmark.
+	if ( localStorage["mailLabelWidth"] ) {
+		document.getElementById('label_width').value = localStorage["mailLabelWidth"];
+	}
+	else {
+		document.getElementById('label_width').value = 172;
+	}
   
 }
 </script>
@@ -55,7 +55,7 @@ function main() {
 <table border="0">
 <tr>
   <td rowspan="2" valign="top" align="center" width="80">
-    <img src="mail_128x128.png" width="64" height="64" />
+    <img src="netfrontlife_72x72.png" width="64" height="64" />
   </td>
   <td height="22"></td>
 </tr>
