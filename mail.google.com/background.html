@@ -1,0 +1,22 @@
+<html>
+<head>
+<script>
+function getLabelWidth() {
+  if (window.localStorage == null)
+    return "";
+  if ( localStorage["mailLabelWidth"] == null )
+    return "";
+  return localStorage["mailLabelWidth"];
+}
+
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    if (request.method == "getLabelWidth")
+      sendResponse({labelWidth: getLabelWidth()});
+    else
+      sendResponse({}); // snub them.
+});
+
+
+</script>
+</head>
+</html>
