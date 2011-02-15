@@ -1,0 +1,82 @@
+<!DOCTYPE>
+<!--
+ * Copyright (c) 2009 The Chromium Authors. All rights reserved.  Use of this
+ * source code is governed by a BSD-style license that can be found in the
+ * LICENSE file.
+-->
+<html>
+<head>
+  <title>Options for the mail.access-company.com extension</title>
+<style>
+#providerSelection {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 10pt;
+}
+</style>
+<script>
+
+function saveOptions() {
+	if ( window.localStorage == null ) {
+		alert('Local storage is required for changing providers');
+		return;
+	}
+
+	localStorage["mailLabelWidth"] = document.getElementById('label_width').value;
+  
+	// Update status to let user know options were saved.
+	var status = document.getElementById("status");
+	status.innerHTML = "Options Saved.";
+	
+	setTimeout( function() {
+		status.innerHTML = "";
+ 	}, 750);
+}
+
+function restoreDefault()
+{
+	document.getElementById('label_width').value = 172;
+	saveOptions();
+}
+
+function main() {
+	if (window.localStorage == null) {
+		alert("LocalStorage must be enabled for changing options.");
+		document.getElementById('label_width').disabled = true;
+		return;
+	}
+
+	// Default handler is checked. If we've chosen another provider, we must
+	// change the checkmark.
+	if ( localStorage["mailLabelWidth"] ) {
+		document.getElementById('label_width').value = localStorage["mailLabelWidth"];
+	}
+	else {
+		document.getElementById('label_width').value = 172;
+	}
+  
+}
+</script>
+</head>
+<body onload="main()">
+<table border="0">
+<tr>
+  <td rowspan="2" valign="top" align="center" width="80">
+    <img src="netfrontlife_72x72.png" width="64" height="64" />
+  </td>
+  <td height="22"></td>
+</tr>
+<tr>
+  <td valign="center">
+    <div id="providerSelection">
+    <strong>mail.access-company.com extension options:</strong>
+    <br /><br />
+    Specify the width of the label column: <input id="label_width" type="text" name="label_width" value="172"><input type="submit" value="Save" onclick="saveOptions()">
+    <br />
+    <br /><input type="button" value="Restore Default label width" onclick="restoreDefault()">
+    </div>
+  </td>
+</tr>
+</table>
+<div id="status" align="center"></div>
+</body>
+</html>

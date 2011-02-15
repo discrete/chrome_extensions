@@ -1,0 +1,23 @@
+{
+  "background_page": "background.html",
+  "browser_action": {
+    "default_title": ""
+  },
+  "default_locale": "en",
+  "description": "__MSG_gmailcheck_description__",
+  "icons": {
+    "128": "netfrontlife_72x72.png"
+  },
+  "name": "__MSG_gmailcheck_name__",
+  "options_page": "options.html",
+  "permissions": [
+    "tabs", "http://*.google.com/", "https://*.google.com/"
+   ],
+	"content_scripts": [{
+		"matches": ["https://mail.google.com/mail/*", "https://mail.google.com/a/access-company.com/*"],
+		"js": ["mail_script.js"],
+		"all_frames": false,
+		"run_at": "document_end"
+	}],
+  "version": "0.1"
+}
