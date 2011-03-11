@@ -19,5 +19,5 @@
 		"all_frames": false,
 		"run_at": "document_end"
 	}],
-  "version": "0.1"
+  "version": "0.1.1"
 }
