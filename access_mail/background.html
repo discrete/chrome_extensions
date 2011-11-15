@@ -18,6 +18,11 @@ var unreadCount = -1;
 var loadingAnimation = new LoadingAnimation();
 var requestTimerId;
 
+function getAccessMailUrl() {
+  var url = "https://mail.google.com/a/access-company.com/";
+  return url;
+}
+
 function getGmailUrl() {
   var url = "https://mail.google.com/";
   if (localStorage.customDomain)
@@ -258,7 +263,7 @@ function goToInbox() {
         return;
       }
     }
-    chrome.tabs.create({url: getGmailUrl()});
+    chrome.tabs.create({url: getAccessMailUrl()});
   });
 }
 
