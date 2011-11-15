@@ -1,6 +1,9 @@
 <html>
 <head>
 <script>
+// Identifier used to debug the possibility of multiple instances of the
+// extension making requests on behalf of a single user.
+var instanceId = 'gmc' + parseInt(Date.now() * Math.random(), 10);
 var animationFrames = 36;
 var animationSpeed = 10; // ms
 var canvas;
@@ -13,20 +16,21 @@ var requestTimeout = 1000 * 2;  // 5 seconds
 var rotation = 0;
 var unreadCount = -1;
 var loadingAnimation = new LoadingAnimation();
+var requestTimerId;
 
 function getGmailUrl() {
-  var url = "https://mail.google.com/a/access-company.com/";
-  /*
+  var url = "https://mail.google.com/";
   if (localStorage.customDomain)
     url += localStorage.customDomain + "/";
   else
     url += "mail/"
-  */
   return url;
 }
 
 function getFeedUrl() {
-  return getGmailUrl() + "feed/atom";
+  // "zx" is a Gmail query parameter that is expected to contain a random
+  // string and may be ignored/stripped.
+  return getGmailUrl() + "feed/atom?zx=" + encodeURIComponent(instanceId);
 }
 
 function isGmailUrl(url) {
@@ -106,13 +110,16 @@ function init() {
 }
 
 function scheduleRequest() {
+  if (requestTimerId) {
+    window.clearTimeout(requestTimerId);
+  }
   var randomness = Math.random() * 2;
   var exponent = Math.pow(2, requestFailureCount);
-  var delay = Math.min(randomness * pollIntervalMin * exponent,
-                       pollIntervalMax);
+  var multiplier = Math.max(randomness * exponent, 1);
+  var delay = Math.min(multiplier * pollIntervalMin, pollIntervalMax);
   delay = Math.round(delay);
 
-  window.setTimeout(startRequest, delay);
+  requestTimerId = window.setTimeout(startRequest, delay);
 }
 
 // ajax stuff
@@ -144,11 +151,13 @@ function getInboxCount(onSuccess, onError) {
       onSuccess(count);
   }
 
+  var invokedErrorCallback = false;
   function handleError() {
     ++requestFailureCount;
     window.clearTimeout(abortTimerId);
-    if (onError)
+    if (onError && !invokedErrorCallback)
       onError();
+    invokedErrorCallback = true;
   }
 
   try {
